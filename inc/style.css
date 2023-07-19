@@ -1,0 +1,19 @@
+body {
+  font-family: "Roboto Slab", serif;
+}
+.well {
+  text-align: center;
+  font-size: 30px;
+}
+.data {
+  font-size: 38px;
+}
+.add-btn {
+  font-size: 18px;
+  background-color: rgb(8, 99, 8);
+  border-color: green;
+}
+.dlt-btn {
+  background-color: rgb(207, 15, 15);
+  border-color: red;
+}
