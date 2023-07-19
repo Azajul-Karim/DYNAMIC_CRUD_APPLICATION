@@ -110,8 +110,46 @@ class Database
   }
 
   // update data
-  public function update()
+  public function update($table, $data, $cond)
   {
+    if (!empty($data) && is_array($data)) {
+      $keyValue = '';
+      $whereCond = '';
+      $i = 0;
+
+      foreach ($data as $key => $val) {
+        $add = ($i > 0) ? ' , ' : '';
+        $keyValue .= "$add" . "$key = :$key";
+        $i++;
+      }
+      if (!empty($cond) && is_array($cond)) {
+        $whereCond .= " WHERE ";
+        $i = 0;
+
+        foreach ($cond as $key => $val) {
+          $add = ($i > 0) ? ' AND ' : '';
+          $whereCond .= "$add" . "$key = :$key";
+          $i++;
+        }
+      }
+
+      $sql = "UPDATE " . $table . " SET " . $keyValue . $whereCond;
+
+      $query = $this->pdo->prepare($sql);
+
+      foreach ($data as $key => $val) {
+        $query->bindValue(":$key", $val);
+      }
+
+      foreach ($cond as $key => $val) {
+        $query->bindValue(":$key", $val);
+      }
+      $update = $query->execute();
+
+      return $update ? $query->rowCount() : false;
+    } else {
+      return false;
+    }
   }
   //delete data
   public function delete()

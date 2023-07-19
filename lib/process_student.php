@@ -20,5 +20,27 @@ if (isset($_REQUEST['action']) && !empty($_REQUEST['action'])) {
     Session::set('msg', $msg);
     $home_url = '../index.php';
     header('Location: ' . $home_url);
+  } elseif ($_REQUEST['action'] == 'Edit') {
+    $id = $_POST['id'];
+
+    if (!empty($id)) {
+      $studentData = array(
+        "name"  => $_POST['name'],
+        "email" => $_POST['email'],
+        "phone" => $_POST['phone'],
+      );
+
+      $table = "tbl_student";
+      $condition = array('id' => $id);
+      $update = $db->update($table, $studentData, $condition);
+      if ($update) {
+        $msg = "Data Updated Successfully";
+      } else {
+        $msg = "Data Not Updated !!!";
+      }
+      Session::set('msg', $msg);
+      $home_url = '../index.php';
+      header('Location: ' . $home_url);
+    }
   }
 }
