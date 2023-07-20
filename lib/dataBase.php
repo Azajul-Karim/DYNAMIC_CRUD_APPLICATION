@@ -152,7 +152,26 @@ class Database
     }
   }
   //delete data
-  public function delete()
+  public function delete($table,  $data)
   {
+    if (!empty($data) && is_array($data)) {
+      $whereCond .= " WHERE ";
+      $i = 0;
+
+      foreach ($data as $key => $val) {
+        $add = ($i > 0) ? ' AND ' : '';
+        $whereCond .= "$add" . "$key = :$key";
+        $i++;
+      }
+    }
+    $sql = "DELETE FROM " . $table . $whereCond;
+
+    $query = $this->pdo->prepare($sql);
+
+    foreach ($data as $key => $val) {
+      $query->bindValue(":$key", $val);
+    }
+    $delete = $query->execute();
+    return $delete ? true  : false;
   }
 }

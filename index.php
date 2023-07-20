@@ -46,8 +46,7 @@ if (!empty($msg)) {
           <td><?php echo $data['phone']; ?></< /td>
           <td>
             <a class="button" href="./lib/editstudent.php?id=<?php echo $data['id'] ?>">Edit</a>&nbsp;
-
-            <a class="button dlt-btn" href="deletestudent.php?id=<?php echo $data['id'] ?>" onclick="return confirm('Are You Sure!')">Delete</a>
+            <a class="button dlt-btn" href="./lib/process_student.php?action=delete&id=<?php echo $data['id'] ?>" onclick="return confirm('Are You Sure!')">Delete</a>
           </td>
           </td>
         </tr>

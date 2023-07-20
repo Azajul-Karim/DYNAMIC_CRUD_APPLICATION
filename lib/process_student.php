@@ -42,5 +42,21 @@ if (isset($_REQUEST['action']) && !empty($_REQUEST['action'])) {
       $home_url = '../index.php';
       header('Location: ' . $home_url);
     }
+  } elseif ($_REQUEST['action'] == 'delete') {
+    $id = $_GET['id'];
+
+    if (!empty($id)) {
+      $table = "tbl_student";
+      $condition = array('id' => $id);
+      $delete = $db->delete($table,  $condition);
+      if ($delete) {
+        $msg = "Data Deleted Successfully";
+      } else {
+        $msg = "Data Not Deleted !!!";
+      }
+      Session::set('msg', $msg);
+      $home_url = '../index.php';
+      header('Location: ' . $home_url);
+    }
   }
 }
