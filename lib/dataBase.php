@@ -154,7 +154,6 @@ class Database
 
   //delete data
   public function delete($table,  $data)
-
   {
     $whereCond = '';
     if (!empty($data) && is_array($data)) {
