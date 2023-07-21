@@ -90,7 +90,7 @@ class Database
     if (!empty($data) && is_array($data)) {
       $keys = '';
       $values = '';
-      $i = 0;
+
       $keys = implode(',', array_keys($data));
       $values = ":" . implode(', :', array_keys($data));
       $sql = "INSERT INTO " . $table . " (" . $keys . ") VALUES (" . $values . ")";
@@ -162,18 +162,25 @@ class Database
 
       foreach ($data as $key => $val) {
         $add = ($i > 0) ? ' AND ' : '';
-        $whereCond .= "$add" . "$key = :$key";
+        // $whereCond .= "$add" . "$key = :$key";
+        $whereCond .= $add . $key . " = '" . $val . "'";
+
         $i++;
       }
     }
     $sql = "DELETE FROM " . $table . $whereCond;
+    $delete = $this->pdo->exec($sql);
+    return $delete ? true  : false;
 
+
+    /*
     $query = $this->pdo->prepare($sql);
-
     foreach ($data as $key => $val) {
       $query->bindValue(":$key", $val);
     }
     $delete = $query->execute();
     return $delete ? true  : false;
+
+ */
   }
 }
